@@ -1,14 +1,11 @@
-from __future__ import print_function
-import random
-import pytest
 
 
 def mergesort(seq, in_place=True):
     """Sorts `seq` using the mergesort algorithm.
 
     `seq` is the sequence to be sorted. If `in_place` is `True`
-    the sort will be performed in situ, else a new sorted sequence
-    will be returned.
+    the sequence itself will be sorted and returned, else a copy
+    of the original sequence is used.
     """
     seq = seq if in_place else seq[:]
     _mergesort(seq, 0, len(seq) - 1)
@@ -19,8 +16,8 @@ def straight_mergesort(seq, in_place=True):
     """Sorts `seq` using the straight-mergesort algorithm.
 
     `seq` is the sequence to be sorted. If `in_place` is `True`
-    the sort will be performed in situ, else a new sorted sequence
-    will be returned.
+    the sequence itself will be sorted and returned, else a copy
+    of the original sequence is used.
     """
     seq = seq if in_place else seq[:]
     size, length = 1, len(seq)
@@ -65,8 +62,8 @@ def quicksort(seq, in_place=True):
     """Sorts `seq` using the quicksort algorithm.
 
     `seq` is the sequence to be sorted. If `in_place` is `True`
-    the sort will be performed in situ, else a new sorted sequence
-    will be returned.
+    the sequence itself will be sorted and returned, else a copy
+    of the original sequence is used.
     """
     seq = seq if in_place else seq[:]
     _quicksort(seq, 0, len(seq) - 1)
@@ -87,30 +84,31 @@ def _quicksort(seq, left, right):
             j -= 1
         if i >= j:
             break
-        seq[i], seq[j] = seq[j], seq[i]
-    seq[i], seq[right] = seq[right], seq[i]
+        _swap(seq, i, j)
+    _swap(seq, i, right)
 
     _quicksort(seq, left, i - 1)
     _quicksort(seq, i + 1, right)
 
 
-@pytest.fixture
-def seq():
-    return random.sample(range(10 ** 2), 10)
+def bubblesort(seq, in_place=True):
+    """Sorts `seq` using the bubblesort algorithm.
+
+    `seq` is the sequence to be sorted. If `in_place` is `True`
+    the sequence itself will be sorted and returned, else a copy
+    of the original sequence is used.
+    """
+    seq = seq if in_place else seq[:]
+    for n in range(len(seq), 1, -1):
+        swapped = False
+        for i in range(n - 1):
+            if seq[i] > seq[i + 1]:
+                _swap(seq, i, i + 1)
+                swapped = True
+        if not swapped:
+            break
+    return seq
 
 
-def test_quicksort(seq):
-    assert_sorted(quicksort(seq, in_place=False))
-
-
-def test_mergesort(seq):
-    assert_sorted(mergesort(seq, in_place=False))
-
-
-def assert_sorted(seq):
-    length = len(seq)
-    if length < 2:
-        # Empty and one-element lists are sorted by definition
-        return
-    for i in range(length - 1):
-        assert seq[i] <= seq[i + 1]
+def _swap(seq, first, second):
+    seq[first], seq[second] = seq[second], seq[first]
