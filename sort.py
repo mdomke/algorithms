@@ -64,6 +64,8 @@ def quicksort(seq, in_place=True):
     `seq` is the sequence to be sorted. If `in_place` is `True`
     the sequence itself will be sorted and returned, else a copy
     of the original sequence is used.
+
+    This variant uses recursive calls.
     """
     seq = seq if in_place else seq[:]
     _quicksort(seq, 0, len(seq) - 1)
@@ -97,6 +99,10 @@ def bubblesort(seq, in_place=True):
     `seq` is the sequence to be sorted. If `in_place` is `True`
     the sequence itself will be sorted and returned, else a copy
     of the original sequence is used.
+
+    The bubblesort algorithm walks through the sequence to be sorted
+    and swaps any two subsequent elements which do not obey the sort
+    order.
     """
     seq = seq if in_place else seq[:]
     for n in range(len(seq), 1, -1):
