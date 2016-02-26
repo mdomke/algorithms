@@ -93,6 +93,15 @@ def _quicksort(seq, left, right):
     _quicksort(seq, i + 1, right)
 
 
+def sortquick(seq):
+    if not seq:
+        return seq
+    pivot = seq[0]
+    bigger = sortquick([x for x in seq[1:] if x > pivot])
+    smaller = sortquick([x for x in seq[1:] if x <= pivot])
+    return smaller + [pivot] + bigger
+
+
 def bubblesort(seq, in_place=True):
     """Sorts `seq` using the bubblesort algorithm.
 

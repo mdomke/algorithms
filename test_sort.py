@@ -1,6 +1,8 @@
-from sort import quicksort, mergesort, straight_mergesort, bubblesort
 import random
+
 import pytest
+
+from sort import quicksort, mergesort, straight_mergesort, bubblesort
 
 
 @pytest.fixture
