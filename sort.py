@@ -33,7 +33,7 @@ def straight_mergesort(seq, in_place=True):
 
 
 def _mergesort(seq, left, right):
-    if not left < right:
+    if left >= right:
         return
     mid = (left + right) // 2
     _mergesort(seq, left, mid)
